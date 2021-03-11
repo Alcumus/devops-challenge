@@ -1,4 +1,5 @@
-variable "environment_tag" {
+//Global variables
+variable "environment" {
   description = "Environment tagging for resources"
   default = "test"
 }
@@ -9,7 +10,6 @@ variable "availability_zone" {
   default     = "us-east-1a" # "us-east-1c"] //,us-east-1c,us-east-1d"]
 }
 
-//Global variables
 variable "region" {
   description = "AWS region"
   default     = "us-east-1"
@@ -24,3 +24,4 @@ variable "aws_profile" {
   description = "AWS profile"
   default     = "default"
 }
+
