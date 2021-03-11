@@ -1,0 +1,92 @@
+- hosts: ec2
+  become: yes
+  become_user: root
+  become_method: sudo
+  
+  tasks:
+    - name: configure / Update yum packages
+      yum:
+        name: '*'
+        state: latest
+        update_cache: yes
+  
+    - name: Ensure a list of yum packages are installed
+      yum:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: yes
+      vars:
+        packages:
+        - python-pip
+        - yum-utils
+        - device-mapper-persistent-data
+        - lvm2
+        - amazon-linux-extras
+
+    - name: Add extras repository
+      shell: yum-config-manager --enable extras
+
+    - name: Install docker-ce (centos) via amazon-linux-extras packages
+      shell: "amazon-linux-extras install docker=18.06.1 -y"
+
+    - name: Enable Docker CE service at startup
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Ensure docker-compose is installed and available
+      get_url: 
+        url : https://github.com/docker/compose/releases/download/1.7.0-rc1/docker-compose-{{ ansible_system }}-{{ ansible_userspace_architecture }}
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x'
+
+    - name: enable nginx for ec2 vm
+      shell: "amazon-linux-extras enable nginx1.12"
+      become: yes
+
+    - name: install nginx
+      yum:
+        name: nginx
+        state: latest
+
+    - name: copy the nginx config files
+      copy:
+        src: "./content/nginx.conf"
+        dest: "/etc/nginx/nginx.conf"
+        mode: 0644
+
+    - name: create dir 
+      file: 
+        path: "/var/www/testdevops.com"
+        state: directory
+    
+    - name: create dir for docker app
+      file: 
+        path: "~/app"
+        state: directory
+
+    - name: Copy static files
+      copy:
+        src: "./content/static/"
+        dest: "/var/www/testdevops.com/"
+        mode: 0644
+    
+    - name: Copy static files container app
+      copy:
+        src: "./content/static/docker-nginx-react/client/"
+        dest: "~/app/"
+        mode: 0644
+
+    - name: docker start the client app
+      shell: "cd ~/app"
+
+    - name: Update static nginx config
+      copy: 
+        src: "./content/web.conf"
+        dest: "/etc/nginx/conf.d/testdevops.com.conf"
+        mode: 0644
+
+    - name: Restart Nginx
+      service: name=nginx state=restarted
+      become: yes

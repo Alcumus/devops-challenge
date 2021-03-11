@@ -1,0 +1,1 @@
+sudo ansible-playbook playbook-plain.yml -vv --private-key=~/.ssh/test-devops.pem

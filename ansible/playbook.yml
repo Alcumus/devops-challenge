@@ -1,0 +1,21 @@
+- hosts: ec2
+  become: yes
+  become_user: root
+  become_method: sudo
+  
+  tasks:
+    - name: creating a docker repository
+      yum_repository:
+         description: repo for docker
+         name: docker-ce
+         baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
+         gpgcheck: no
+    - name: installing docker
+      package:
+         name: docker-ce
+         state: present
+
+    - name: starting docker services
+    service:
+          name: docker
+          state: started
