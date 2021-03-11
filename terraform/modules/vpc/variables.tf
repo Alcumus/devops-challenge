@@ -24,5 +24,5 @@ variable "environment" {
 }
 variable "public_key_path" {
   description = "Public key path"
-  default = "~/.ssh/test_id_rsa.pub"
+  default = "~/.ssh/test-devops.pem.pub"
 }

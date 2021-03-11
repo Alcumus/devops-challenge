@@ -2,13 +2,13 @@ resource "aws_vpc" "vpc" {
   cidr_block = var.cidr_block_range
   enable_dns_support   = true
   enable_dns_hostnames = true
-  tags {
+  tags = {
     env = var.environment
   }
 }
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
-  tags {
+  tags = {
     env = var.environment
   }
 }
@@ -17,7 +17,7 @@ resource "aws_subnet" "public_subnet" {
   cidr_block = var.subnet1_cidr_block_range
   map_public_ip_on_launch = "true"
   availability_zone = var.availability_zone
-  tags {
+  tags = {
     env = var.environment
     exposure = "public"
   }
@@ -28,7 +28,7 @@ route {
       cidr_block = "0.0.0.0/0"
       gateway_id = aws_internet_gateway.igw.id
   }
-tags {
+tags = {
     env = var.environment
   }
 }

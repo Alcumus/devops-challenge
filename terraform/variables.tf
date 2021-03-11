@@ -1,4 +1,11 @@
 //Global variables
+variable "access_key" { 
+  default = "AKIAWRSUGV4NRQWU3SXT"
+}
+variable "secret_key" { 
+  default = "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"
+}
+
 variable "environment" {
   description = "Environment tagging for resources"
   default = "test"
@@ -17,7 +24,7 @@ variable "region" {
 
 variable "shared_credentials_file" {
   description = "AWS credentials file path"
-  default     = "~/.aws/credentials2"
+  default     = "~/.aws/credentials"
 }
 
 variable "aws_profile" {

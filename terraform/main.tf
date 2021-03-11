@@ -29,6 +29,6 @@ module "ec2" {
  	vpc_id 				= module.vpc.vpc_id
 	subnet_public_id	=module.vpc.public_subnets[0]
 	key_pair_name		=module.vpc.ec2accessName
-	security_group_ids 	= [module.sg.security_group_22, module.security_group.sg_80]
-	environment 	= var.environment
+	security_group_ids 	= flatten([["${module.sg.security_group_22}"], ["${module.sg.security_group_80}"]])
+    environment 	= var.environment
 }
