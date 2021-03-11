@@ -8,6 +8,7 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+*.tfvars
 
 # Crash log files
 crash.log
@@ -30,3 +31,6 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
+
+## keys
+*.pem
