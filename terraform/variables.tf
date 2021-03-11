@@ -1,9 +1,9 @@
 //Global variables
 variable "access_key" { 
-  default = "AKIAWRSUGV4NRQWU3SXT"
+  default = "from tfvars"
 }
 variable "secret_key" { 
-  default = "zUOtfLJbn5T7lZ9rejwdXRlApRz9kySgacgSeM0U"
+  default = "from tfvars"
 }
 
 variable "environment" {
