@@ -26,8 +26,26 @@ You are required to set up a new server in AWS. It must:
 Fork this repository.
 
 * Provide instructions on how to create the server.
-* Provide a script that can be run periodically (and externally) to check if the server is up and serving the expected version number. Use your scripting language of choice.
+- first run Terraform
+-- ensure you have the right credentials in the tfvars file for access_key and secret_key
+-- run init-terraform.sh
+-- this will set up your resources
+
+- Then Ansible
+-- ensure you check the location for PEM key for access to the ec2
+-- name the file ~/.ssh/test-devops.pem
+-- run init-ansible.sh
+
+* Provide a script that can be run periodically (and externally) to check if the server is up and serving the expected version number. 
+Use your scripting language of choice.
+
+- this was a simple bash script to check for the content of the returning HTML
+- you can make this into a cron
+-- run sh runnable-html-body.sh
+
 * Provide scripts for the install steps (it doesn't have to be a single script)
+-- listed in above
+
 * Alter the README to contain the steps required to:
   * Create the server.
   * Run the checker script.
