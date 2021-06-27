@@ -1,0 +1,13 @@
+---
+  - hosts: webserver
+    become_method: sudo
+    remote_user: root
+    tasks:      
+      - name: check the status of nginx server
+        nginx_status_facts:
+          url: http://54.145.63.207
+        register: services_state
+      - name: debug
+        debug:
+          var: services_state      
+
